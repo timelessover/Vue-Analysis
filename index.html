@@ -10,18 +10,98 @@
 
 <body>
     <div id="root">
-        {{name}}
+        <div v-show="flag">
+            看见我了吧
+        </div>
+        <div v-show="!flag">
+            我消失了
+        </div>
+        {{co}}
+        <button @click="co">+</button>
     </div>
     <script>
-   
         const vm = new Vue({
-            data() {
-                return {
-                    name: 'chris'
+            props:{
+                co:{
+                    default:2
                 }
             },
+            data: {
+                flag: true,
+                count1: 1,
+                count2: 2,
+                co:5,
+                obj:{
+                    a:1,
+                    b:2
+                },
+                arr: [{
+                    a: 1
+                }, {
+                    b: 2
+                }, { c: 1 }],
+            },
+            computed: {
+                co: {
+                    get() {
+                        return this.count1 + this.count2
+                    },
+                    set() {
+                        this.count2 += 1
+                    }
+                }
+            },
+            watch: {
+                count(v, o) {
+                    console.log(v, o)
+                },
+                count: {
+                    handler: function (val, oldVal) { console.log(`2`) },
+                    deep: true
+                },
+                // count:[
+                //     function handle2 (val, oldVal) { console.log(1) },
+                //     function handle3 (val, oldVal) { console.log(2) },
+                //     function handle4 (val, oldVal) { console.log(3) }
+                // ]
+            },
+            methods: {
+                co1() {
+                    // this.obj.a = 12
+                    // console.log(this.obj)
+                    this.flag = !this.flag
+                    // console.log(this.$set(this.obj,'a',12))
+                    // console.log(this.obj)
+                },
+
+
+
+            },
+            beforeCreate() {
+                console.log(this.name)
+            },
+            created() {
+                console.log(this.name)
+            },
+            beforeMount() {
+                console.log(this.name)
+            },
+            mounted() {
+                console.log(this.name)
+            },
+            updated() {
+                console.log(2)
+            },
+            beforeDestroy() {
+                console.log(this.name)
+            },
+            destroyed() {
+                console.log(this.name)
+            },
+
         })
         vm.$mount("#root")
+        
     </script>
 </body>
 
