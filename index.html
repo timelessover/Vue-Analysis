@@ -10,98 +10,50 @@
 
 <body>
     <div id="root">
-        <div v-show="flag">
-            看见我了吧
-        </div>
-        <div v-show="!flag">
-            我消失了
-        </div>
-        {{co}}
-        <button @click="co">+</button>
+        {{name}}
     </div>
     <script>
+
         const vm = new Vue({
-            props:{
-                co:{
-                    default:2
-                }
-            },
+            el:"#root",
             data: {
-                flag: true,
-                count1: 1,
-                count2: 2,
-                co:5,
-                obj:{
-                    a:1,
-                    b:2
-                },
-                arr: [{
-                    a: 1
-                }, {
-                    b: 2
-                }, { c: 1 }],
+                name: 'Chris'
             },
-            computed: {
-                co: {
-                    get() {
-                        return this.count1 + this.count2
-                    },
-                    set() {
-                        this.count2 += 1
-                    }
-                }
-            },
-            watch: {
-                count(v, o) {
-                    console.log(v, o)
-                },
-                count: {
-                    handler: function (val, oldVal) { console.log(`2`) },
-                    deep: true
-                },
-                // count:[
-                //     function handle2 (val, oldVal) { console.log(1) },
-                //     function handle3 (val, oldVal) { console.log(2) },
-                //     function handle4 (val, oldVal) { console.log(3) }
-                // ]
-            },
-            methods: {
-                co1() {
-                    // this.obj.a = 12
-                    // console.log(this.obj)
-                    this.flag = !this.flag
-                    // console.log(this.$set(this.obj,'a',12))
-                    // console.log(this.obj)
-                },
-
-
-
-            },
+            // 初始化Vue基本属性，数据没有初始化
             beforeCreate() {
-                console.log(this.name)
+                console.log(this.name)  // undefined
             },
+            // 数据促使话完毕，可以打印data，但是视图不渲染，用于请求
             created() {
                 console.log(this.name)
             },
+            // 进行template与render函数选择编译，为渲染 VDOM 做准备。
             beforeMount() {
                 console.log(this.name)
             },
+            // 执行render,生产真实 DOM , 渲染视图
             mounted() {
                 console.log(this.name)
             },
-            updated() {
-                console.log(2)
+            // 数据改变,之后执行diff与render函数，生产新的 VDOM
+            beforeUpdate () {
+                console.log(this.name)
             },
+            // render函数已经执行完毕，生产新的 DOM
+            updated() {
+                console.log(this.name)
+            },
+            // 销毁前对象所有对象属性前调用
             beforeDestroy() {
                 console.log(this.name)
             },
+            // 组件对象完全销毁调用
             destroyed() {
-                console.log(this.name)
+                console.log(this.name) // undefined
             },
 
         })
-        vm.$mount("#root")
-        
+        //vm.$mount("#root")
     </script>
 </body>
 
